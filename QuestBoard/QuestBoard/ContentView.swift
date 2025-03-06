@@ -1,4 +1,3 @@
-//
 //  ContentView.swift
 //  QuestBoard
 //
@@ -8,14 +7,28 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    var profileView = ProfileView()
+    var questsView = QuestsView()
+    var storeView = StoreView()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
+            profileView.tabItem {
+                Image(systemName: "person.fill")
+                Text("Profile")
+            }.tag(2)
+            questsView.tabItem {
+                Image(systemName: "person.fill")
+                Text("Quests")
+            }.tag(1)
+            storeView.tabItem {
+                Image(systemName: "person.fill")
+                Text("Store")
+            }.tag(3)
         }
-        .padding()
+        
     }
 }
 
