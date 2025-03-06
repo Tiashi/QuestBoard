@@ -9,13 +9,16 @@ import SwiftUI
 struct QuestsView: View {
     
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Image("background").resizable()
+            
+            Text(" Quest Board").font(.custom("Mirage Gothic", size: 30)).padding(.top, 74).foregroundStyle(.white)
             VStack {
-                
+                ScrollView() {
+                    
+                }.frame(width: 300, height: 570).padding(.top, 120)
             }
-            .padding()
-        }.ignoresSafeArea(.all)
+        }.ignoresSafeArea(edges: .top)
     }
 }
 
