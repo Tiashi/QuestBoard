@@ -9,16 +9,14 @@ import SwiftUI
 struct ProfileView: View {
     
     var body: some View {
-        ZStack {
-            Image("background")
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                Text("Hello, Profile!")
-            }
-            .padding()
+        
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundStyle(.tint)
+            Text("Hello, Profile!")
         }
+        .padding()
     }
 }
 

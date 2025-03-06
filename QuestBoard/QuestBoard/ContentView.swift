@@ -16,11 +16,11 @@ struct ContentView: View {
         
         TabView() {
             profileView.tabItem {
-                Image(systemName: "list.clipboard")
-                Text("Quests")
+                Image(systemName: "person.fill")
+                Text("Profile")
             }.tag(2)
             questsView.tabItem {
-                Image(systemName: "person.fill")
+                Image(systemName: "list.clipboard")
                 Text("Quests")
             }.tag(1)
             storeView.tabItem {

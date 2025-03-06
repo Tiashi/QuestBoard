@@ -9,13 +9,13 @@ import SwiftUI
 struct QuestsView: View {
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, Quests!")
-        }
-        .padding()
+        ZStack {
+            Image("background").resizable()
+            VStack {
+                
+            }
+            .padding()
+        }.ignoresSafeArea(.all)
     }
 }
 
