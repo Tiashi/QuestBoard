@@ -14,17 +14,17 @@ struct ContentView: View {
     
     var body: some View {
         
-        TabView(selection: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Selection@*/.constant(1)/*@END_MENU_TOKEN@*/) {
+        TabView() {
             profileView.tabItem {
-                Image(systemName: "person.fill")
-                Text("Profile")
+                Image(systemName: "list.clipboard")
+                Text("Quests")
             }.tag(2)
             questsView.tabItem {
                 Image(systemName: "person.fill")
                 Text("Quests")
             }.tag(1)
             storeView.tabItem {
-                Image(systemName: "person.fill")
+                Image(systemName: "storefront")
                 Text("Store")
             }.tag(3)
         }
