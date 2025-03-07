@@ -2,7 +2,7 @@ import SwiftUI
 
 struct QuestDetailView: View {
     
-    //var quest: Quest
+    var quest: Quest
     
     var body: some View {
         
@@ -66,8 +66,6 @@ struct QuestDetailView: View {
                     }
                     
                     
-                    //----------------
-                    
                     Text("Difficulty:").myFont(size: 20)
                     
                     HStack {
@@ -76,8 +74,6 @@ struct QuestDetailView: View {
                                 .foregroundColor(.yellow)
                         }
                     }
-                    
-                    //----------------
                     
                     //To be calculated by an algorithm
                     VStack {
@@ -89,21 +85,6 @@ struct QuestDetailView: View {
                     }
                     .foregroundColor(.black)
                     .padding(.top, 10)
-          
-                    
-                    /*ZStack {
-                        Image("wood_board")
-                            .resizable()
-                            .frame(width: 400, height: 100)
-                            .shadow(radius: 5)
-                        
-                        Text("Category")
-                            .font(.custom("Papyrus", size: 24))
-                            .foregroundColor(.black)
-                            .shadow(color: .gray, radius: 1)
-                    }*/
-                    
-     
                     
                 }//QuestParer text
                 .frame(width: 280, height: 420)
@@ -115,7 +96,15 @@ struct QuestDetailView: View {
 }
 
 #Preview {
-    ContentView()
+    QuestDetailView(
+        quest: Quest (
+            name: "Quest Name",
+            description: "Long description of the quest goes here! oHo :)",
+            icon: "circle",
+            difficulty: 3,
+            isUrgent: true
+        )
+    )
 }
 
 
