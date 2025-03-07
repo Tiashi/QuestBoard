@@ -20,5 +20,5 @@ struct StoreView: View {
 }
 
 #Preview {
-    StoreView()
+    ContentView()
 }

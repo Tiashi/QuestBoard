@@ -12,6 +12,12 @@ import Observation
 class SharedData {
     
     var activeQuests: [Quest] = [
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
+        Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true),
         Quest(name: "String", description: "", icon: "", difficulty: 1, isUrgent: true)
     ]
     

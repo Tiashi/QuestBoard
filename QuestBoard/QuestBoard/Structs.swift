@@ -5,7 +5,10 @@
 //  Created by Mattia on 06/03/25.
 //
 
-struct Quest {
+import SwiftUI
+
+struct Quest: Identifiable {
+    var id: UUID = UUID()
     var name: String
     var description: String
     var icon: String

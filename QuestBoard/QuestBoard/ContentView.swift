@@ -19,7 +19,7 @@ struct ContentView: View {
     
     var body: some View {
         
-        TabView() {
+        TabView(selection: $selectedTab) {
             
             profileView.tabItem {
                 Image(systemName: "person.fill")
