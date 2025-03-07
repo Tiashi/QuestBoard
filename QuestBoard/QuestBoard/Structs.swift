@@ -15,3 +15,14 @@ struct Quest: Identifiable {
     var difficulty: Int
     var isUrgent: Bool
 }
+
+struct Item: Identifiable {
+    
+    var id: UUID = UUID()
+    var accessoryName: String
+    var stats = Array(repeating: 0, count: 7)
+    var itemImage: String
+    var iconImage: String
+    var cost: Int
+    var sold: Bool = false
+}

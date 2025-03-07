@@ -13,8 +13,8 @@ struct QuestsView: View {
     var body: some View {
         ZStack() {
             
-            Image("background").resizable()
-            Text(" Quest Board").myFont(size: 30).padding(.bottom, 630).foregroundStyle(.white)
+            Image("background").resizable().frame(width: 460)
+            Text(" Quest Board").myFont(size: 30).padding(.bottom, 630).foregroundStyle(.brown).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1)
             if (myData.activeQuests.isEmpty)
             {
                 VStack
@@ -31,12 +31,11 @@ struct QuestsView: View {
                     ScrollView() {
                         LazyVGrid(columns: columns) {
                             ForEach(myData.activeQuests) { quest in
-                                ZStack {
-                                    QuestElement(name: quest.name)
-                                }
+                                QuestElement(quest: quest)
+                                
                             }
                         }
-                    }.frame(width: 275, height: 500)
+                    }.frame(width: 320, height: 500)
                 }
             }
         }.ignoresSafeArea(edges: .top)
@@ -48,11 +47,38 @@ struct QuestsView: View {
 
 struct QuestElement: View {
     
-    var name: String
+    var quest: Quest
     
     var body: some View {
-        Image("paper").resizable().frame(width: 125, height: 170)
-        Text(name)
+        ZStack {Image(quest.isUrgent ? "bloodyPaper" : "paper").resizable().frame(width: 145, height: 190)
+            VStack {
+                
+                HStack {
+                    Text(quest.name).myFont(size: 27)
+                }
+                
+                Rectangle().foregroundStyle(.clear).overlay(
+                    Text(quest.description).myFont(size: 14)).frame(height: 60)
+                
+
+                
+                HStack {
+                    
+                    Image(systemName: "puzzlepiece.extension").resizable().frame(width: 30, height: 30)
+                    
+                    VStack {
+                        Text("Difficulty").myFont(size: 18)
+                        HStack {
+                            ForEach(0..<5) { _ in
+                                Image(systemName: "star.fill").resizable().frame(width: 8, height: 8)
+                                    .foregroundColor(.yellow).shadow(color: .black,radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1)
+                            }
+                        }
+                    }
+                }
+                
+            }.padding(.horizontal)
+        }
     }
 }
 
