@@ -18,15 +18,16 @@ struct QuestDetailView: View {
                 .shadow(color: .black, radius: 10)
                 .offset(x: -150, y: -330)
                 .padding(.top, 15)
-            //------------------------------------------
             
+            //Implementing the quest paper details
             ZStack {
                 
-                Image("paper")
+                Image(quest.isUrgent ? "paper" : "paper")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 500)
                     .shadow(radius: 10)
+                
                 
                 VStack {
             
@@ -88,12 +89,58 @@ struct QuestDetailView: View {
                     
                 }//QuestParer text
                 .frame(width: 280, height: 420)
-                
             }//QuestPaper
-            .foregroundColor(.black)
-        }//Background
+            
+        }.toolbar {
+            ToolbarItemGroup(placement: .bottomBar) {
+                
+                Button(action: {
+                    print("Oho 1")
+                }) {
+                    Image(systemName: "circle.fill")
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    print("Oho 2")
+                }) {
+                    Image(systemName: "circle.fill")
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    print("Oho 3")
+                }) {
+                    Image(systemName: "circle.fill")
+                }
+                
+            }
+        }.onAppear {
+            
+            let barAppearance = UIToolbar.appearance()
+            //let itemAppearance = UITabBarItem.appearance()
+            
+            
+            //let myFont = UIFont( name: "Mirage Gothic", size: 14 )!
+            
+            barAppearance.backgroundColor = UIColor(.brown)
+            
+            /*itemAppearance.setTitleTextAttributes([
+                .font: myFont
+            ],for: .normal )
+            itemAppearance.setTitleTextAttributes([
+                .foregroundColor: UIColor.white,
+                .font: myFont
+            ],for: .selected )*/
+            
+        }//toolbarBackground(Color.blue, for: .bottomBar)
+        // ^ Back ground and Tool Bar ^
     }
 }
+
+
 
 #Preview {
     QuestDetailView(
