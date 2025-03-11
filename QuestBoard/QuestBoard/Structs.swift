@@ -14,6 +14,12 @@ struct Quest: Identifiable {
     var icon: String
     var difficulty: Int
     var isUrgent: Bool
+    var completed: Bool
+    var completionThreshold: Date?
+    var timeOfCompletion: Date?
+    
+    var exp: Int
+    var gold: Int
 }
 
 struct Item: Identifiable {
@@ -25,4 +31,29 @@ struct Item: Identifiable {
     var iconImage: String
     var cost: Int
     var sold: Bool = false
+}
+
+func ReturnCategory(quest: Quest) -> String {
+    
+    switch(quest.icon) {
+        
+    case "text.page":
+        return "Default"
+    case "shippingbox":
+        return "Delivery"
+    case "shield.lefthalf.filled":
+        return "Escort"
+    case "archivebox":
+        return "Fetch"
+    case "dumbbell":
+        return "Training"
+    case "hammer":
+        return "Crafting"
+    case "puzzlepiece.extension":
+        return "Puzzle"
+        default:
+        return "Unknown"
+        
+    }
+    
 }

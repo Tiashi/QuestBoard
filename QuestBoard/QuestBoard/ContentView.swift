@@ -12,6 +12,8 @@ extension Text {
 struct ContentView: View {
     
     @State private var selectedTab = 1 //Default tab bar selection (Quests)
+    @State private var isTabBarVisible = true
+    var myData = sharedData
     
     var profileView = ProfileView()
     var questsView = QuestsView()
@@ -39,20 +41,23 @@ struct ContentView: View {
         }.onAppear {
             
             let barAppearance = UITabBar.appearance()
-            let itemAppearance = UITabBarItem.appearance()
             
-            let myFont = UIFont( name: "Mirage Gothic", size: 14 )!
+            let myFont = UIFont( name: "Mirage Gothic", size: 14)!
             
-            barAppearance.backgroundColor = UIColor(.brown)
-            barAppearance.unselectedItemTintColor = UIColor(.black)
+            let UIbarAppearance = UITabBarAppearance()
+            UIbarAppearance.backgroundColor = UIColor(Color.customDarkBrown)
             
-            itemAppearance.setTitleTextAttributes([
-                .font: myFont
-            ],for: .normal )
-            itemAppearance.setTitleTextAttributes([
-                .foregroundColor: UIColor.white,
-                .font: myFont
-            ],for: .selected )
+            
+            let normalAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor(Color.customBrown), .font: myFont]
+            let selectedAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: myFont]
+            
+            UIbarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = normalAttributes
+            UIbarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = selectedAttributes
+            UIbarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color.customBrown)
+            
+            
+            barAppearance.standardAppearance = UIbarAppearance
+            barAppearance.scrollEdgeAppearance = UIbarAppearance
         }
         
     }

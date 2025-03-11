@@ -8,6 +8,9 @@ import SwiftUI
 
 @main
 struct QuestBoardApp: App {
+    
+    @StateObject private var audioManager = AudioManager()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
