@@ -32,28 +32,3 @@ struct Item: Identifiable {
     var cost: Int
     var sold: Bool = false
 }
-
-func ReturnCategory(quest: Quest) -> String {
-    
-    switch(quest.icon) {
-        
-    case "text.page":
-        return "Default"
-    case "shippingbox":
-        return "Delivery"
-    case "shield.lefthalf.filled":
-        return "Escort"
-    case "archivebox":
-        return "Fetch"
-    case "dumbbell":
-        return "Training"
-    case "hammer":
-        return "Crafting"
-    case "puzzlepiece.extension":
-        return "Puzzle"
-        default:
-        return "Unknown"
-        
-    }
-    
-}

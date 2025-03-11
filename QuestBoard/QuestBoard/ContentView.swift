@@ -13,7 +13,6 @@ struct ContentView: View {
     
     @State private var selectedTab = 1 //Default tab bar selection (Quests)
     @State private var isTabBarVisible = true
-    var myData = sharedData
     
     var profileView = ProfileView()
     var questsView = QuestsView()
