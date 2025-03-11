@@ -1,17 +1,8 @@
 import SwiftUI
 
-extension Text {
-    func myFont(size customSize: Int) -> some View {
-        return self.font(.custom(
-            "Mirage Gothic",
-            size: CGFloat(customSize)
-        ))
-    }
-}
-
 struct ContentView: View {
     
-    @State private var selectedTab = 1 //Default tab bar selection (Quests)
+    @State private var selectedTab = 2 //Default tab bar selection (Quests)
     @State private var isTabBarVisible = true
     
     var profileView = ProfileView()
@@ -64,4 +55,26 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+// My Custom Propriety
+extension View {
+    func myFont(size customSize: Int) -> some View {
+        return self.font(.custom(
+            "Mirage Gothic",
+            size: CGFloat(customSize)
+        ))
+    }
+    
+    func myShadow(weight myWeight: Int, color myColor: Color, radius: CGFloat
+    ) -> some View {
+    
+        let view: some View = self
+    
+        return ZStack {
+            ForEach(0..<myWeight, id: \.self) { _ in
+                view.shadow(color: myColor, radius: radius)
+            }
+        }
+    }
 }
