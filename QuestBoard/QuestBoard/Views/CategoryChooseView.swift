@@ -1,73 +1,118 @@
-//
-//  CategoryChooseView.swift
-//  QuestBoard
-//
-//  Created by Rosario d'Antonio on 10/03/25.
-//
 
 import SwiftUI
 
 struct CategoryChooseView: View {
     
     @Environment(\.dismiss) var dismiss
-    let categoryNames: [String] = ["Default", "Delivery", "Escort", "Fetch", "Training", "Crafting", "Puzzle"]
-    let categoryIcons: [String] = ["text.page", "shippingbox", "shield.lefthalf.filled", "archivebox", "dumbbell", "hammer", "puzzlepiece.extension"]
     
     @Binding var quest: Quest
     @Binding var hasSelected: Bool
     
+    let categoryNames: [String] = [
+        "Default",
+        "Delivery",
+        "Escort",
+        "Fetch",
+        "Training",
+        "Crafting",
+        "Puzzle"
+    ]
+    let categoryIcons: [String] = [
+        "text.page",
+        "shippingbox",
+        "shield.lefthalf.filled",
+        "archivebox",
+        "dumbbell",
+        "hammer",
+        "puzzlepiece.extension"
+    ]
+    
     var body: some View {
-        
         
         ZStack {
             
             Image("backdrop")
-            Image(systemName: "x.circle")
+            
+            Image(systemName: "arrow.backward.circle")
                 .resizable()
-                .frame(width: 60, height: 60)
+                .frame(width: 50, height: 50)
                 .foregroundColor(.brown)
-                .shadow(color: .black, radius: 2).shadow(color: .black, radius: 2).shadow(color: .black, radius: 2)
-                .offset(x: 150, y: -330)
-                .padding(.top, 15).onTapGesture {
-                    dismiss()
-                }
+                .myShadow(weight: 5, color: .black, radius: 2.5)
+                .offset(x: -150, y: -330)
+                .padding(.top, 15)
+                .onTapGesture { dismiss() }
             
             
+            ScrollView {
                 
-            VStack {
-                
-                ScrollView {
-                    ForEach(0..<7) { index in
-                        
-                        ZStack {
-                            Image("woodBoard").resizable().frame(height: 200).padding(.vertical, -15)
-                            VStack {
-                                Text(categoryNames[index] + " Quest").myFont(size: 30)
-                                HStack {
-                                    Text("Category description").myFont(size: 18).padding(.top, 15)
-                                    Image(systemName: categoryIcons[index]).resizable().frame(width: 30, height: 30).padding(.top, 15)
-                                }
-                            }
-                        }.onTapGesture {
-                            quest.icon = categoryIcons[index]
-                            hasSelected = true
-                            dismiss()
-                        }
-                        
+                ForEach(0..<7) { index in
+                    
+                    displayCategory(
+                        categoryName: categoryNames[index],
+                        categoryIcon: categoryIcons[index]
+                    ).onTapGesture {
+                        quest.icon = categoryIcons[index]
+                        hasSelected = true
+                        dismiss()
                     }
+                    
                 }
-                .frame(width: 380, height: 600).padding(.top, 30)
-                
-                
-                
             }
+            .frame(width: 380, height: 600)
+            .padding(.top, 30)
+            
 
         }.ignoresSafeArea(.all)
-        
     }
 }
 
-#Preview {
-    QuestAddView(quest: Quest(name: "Quest Name", description: "Quest description", icon: "text.page", difficulty: 0, isUrgent: false, completed: false, exp: 100, gold: 100))
+
+func displayCategory (
+        categoryName name: String,
+        categoryIcon icon: String
+    ) -> some View {
+    
+    return ZStack {
+        
+        Image("woodBoard")
+            .resizable()
+            .frame(height: 200)
+            .padding(.vertical, -15)
+        
+        VStack {
+            
+            Text(name + " Quest")
+                .myFont(size: 30)
+            
+            HStack {
                 
+                Text("Category description")
+                    .myFont(size: 18)
+                    .padding(.top, 15)
+                
+                Image(systemName: icon)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .padding(.top, 15)
+                
+            }
+        }
+    }
+}
+
+
+
+#Preview {
+    QuestAddView(quest:
+        Quest(
+            name: "Quest Name",
+            description: "Quest description",
+            icon: "text.page",
+            difficulty: 0,
+            isUrgent: false,
+            completed: false,
+            exp: 100,
+            gold: 100
+        )
+    )
 }
