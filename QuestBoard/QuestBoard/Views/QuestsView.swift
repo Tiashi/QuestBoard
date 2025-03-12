@@ -142,7 +142,7 @@ struct QuestElement: View {
                         VStack {
                             Text("Difficulty").myFont(size: 18).foregroundStyle(.black)
                             HStack {
-                                ForEach(0..<quest.difficulty) { int in
+                                ForEach(0..<quest.difficulty, id: \.self) { int in
                                     Image(systemName: "star.fill").resizable().frame(width: 8, height: 8)
                                         .foregroundColor(.yellow).shadow(color: .black,radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1)
                                 }

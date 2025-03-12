@@ -44,3 +44,13 @@ func ReturnCategory(quest: Quest) -> String {
         
     }
 }
+
+func getItemByName(myData: SharedData, name: String) -> Item {
+    
+    for index in 0..<myData.items.count {
+        if myData.items[index].accessoryName == name {
+            return myData.items[index]
+        }
+    }
+    return Item(accessoryName: "", stats: [0,0,5,0,3,0,7], itemImage: [""], iconImage: "", cost: 100, itemLayers: [])
+}

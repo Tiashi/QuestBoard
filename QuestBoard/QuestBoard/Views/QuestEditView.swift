@@ -15,21 +15,32 @@ struct QuestEditView: View {
     var myData = sharedData
     
     @Binding var quest: Quest
+    @State var questCopy: Quest
+    
+    /*
+    let name: String
+    let description: String
+    let icon: String
+    let difficulty: Int
+    let isUrgent: Bool
+    let completionThreshold: Date?
+    let exp: Int
+    let gold: Int
+    */
     @State private var categoryModal: Bool = false
 
-    @State var categorySelected = false
+    @State var categorySelected = true
 
     var body: some View {
         
         ZStack {
-            
             //Implementing background and icon for turn back
             Image("background")
             
             Image(systemName: "x.circle")
                 .resizable()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.brown)
+                .foregroundColor(.customBrown)
                 .shadow(color: .black, radius: 2).shadow(color: .black, radius: 2).shadow(color: .black, radius: 2)
                 .offset(x: 150, y: -330)
                 .padding(.top, 15).onTapGesture {
@@ -143,31 +154,43 @@ struct QuestEditView: View {
             ToolbarItemGroup(placement: .bottomBar) {
                 
                 Button(action: {
+                    
+                    quest.name = questCopy.name
+                    quest.description = questCopy.description
+                    quest.difficulty = questCopy.difficulty
+                    quest.isUrgent = questCopy.isUrgent
+                    quest.icon = questCopy.icon
+                    quest.completionThreshold = questCopy.completionThreshold
+                    quest.exp = questCopy.exp
+                    quest.gold = questCopy.gold
+                    
+                    dismiss()
+                }) {
+                    Image(systemName: "trash").resizable().frame(width: 30, height: 30)
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    myData.activeQuests.removeAll { $0.id == quest.id }
                     myData.activeQuests.append(quest)
                     dismiss()
                 }) {
                     Image(systemName: "checkmark").resizable().frame(width: 30, height: 30)
                 }
                 
-                Spacer()
-                
-                Button(action: {
-                    print("Oho 2")
-                }) {
-                    Image(systemName: "trash").resizable().frame(width: 30, height: 30)
-                }
-                
-                
             }
         }
-        .sheet(isPresented: $categoryModal, onDismiss: {
-            print(quest.icon)}) {
+        .sheet(isPresented: $categoryModal) {
                 CategoryChooseView(quest: $quest, hasSelected: $categorySelected)
         }
 
     }
 }
 
+
 #Preview {
-    QuestAddView(quest: Quest(name: "Quest Name", description: "Quest description", icon: "text.page", difficulty: 1, isUrgent: false, completed: false, exp: 100, gold: 100))
+    
+    ContentView()
+    //QuestAddView(quest: Quest(name: "Quest Name", description: "Quest description", icon: "text.page", difficulty: 1, isUrgent: false, completed: false, exp: 100, gold: 100))
 }

@@ -30,7 +30,7 @@ struct QuestAddView: View {
             Image(systemName: "x.circle")
                 .resizable()
                 .frame(width: 60, height: 60)
-                .foregroundColor(.brown)
+                .foregroundColor(.customBrown)
                 .shadow(color: .black, radius: 2).shadow(color: .black, radius: 2).shadow(color: .black, radius: 2)
                 .offset(x: 150, y: -330)
                 .padding(.top, 15).onTapGesture {
@@ -166,6 +166,14 @@ struct QuestAddView: View {
                     quest.gold = 50 * quest.difficulty
                     quest.completionThreshold = selectedDate
                     myData.activeQuests.append(quest)
+                    
+                    
+                    myData.activeQuests.sort { (quest1: Quest, quest2: Quest) -> Bool in
+                        if quest1.isUrgent != quest2.isUrgent {
+                            return quest1.isUrgent // Among incomplete, urgent tasks come first
+                        }
+                        return false
+                    }
                     dismiss()
                 }) {
                     Image(systemName: "checkmark").resizable().frame(width: 25, height: 25)
@@ -175,8 +183,7 @@ struct QuestAddView: View {
                 
             }
         }
-        .sheet(isPresented: $categoryModal, onDismiss: {
-            print(quest.icon)}) {
+        .sheet(isPresented: $categoryModal) {
                 CategoryChooseView(quest: $quest, hasSelected: $categorySelected)
         }
         .onAppear {

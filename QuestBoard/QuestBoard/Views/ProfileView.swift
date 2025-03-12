@@ -10,11 +10,14 @@ struct ProfileView: View {
     // User data
     @State private var playerName: String = "NAME"
     @State private var rotation: Double = 0
+    @State private var avatarEditModal: Bool = false
     
     var myData = sharedData
     
     
-    @State private var selectedAvatar: String = "avatar"
+    @State private var selectedAvatar: String = "Man"
+    @State private var selectedAccessory: String = ""
+    @State private var selectedPet: String = ""
     
     var body: some View {
         NavigationView {
@@ -28,20 +31,30 @@ struct ProfileView: View {
                 ScrollView {
                     
                     VStack {
-                        // Avatar
-                        Image(selectedAvatar)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                        
+                        ZStack {
+                            let fullAvatar = sortByLayer(myData: myData, selectedAvatar: selectedAvatar, selctedAccessory: selectedAccessory, selectedPet: selectedPet)
+                            ForEach(fullAvatar, id: \.self) { img in
+                                
+                                Image(img)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .clipShape(Circle())
+                                
+                                
+                            }
+                        }
+                        .frame(width: 260, height: 260)
+                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                        .onTapGesture {
+                            avatarEditModal = true
+                        }
                         // Editable Name
                         TextField("Enter Name", text: $playerName)
                             .font(.custom("Mirage Gothic", size: 40))
                             .foregroundColor(.black)
                             .multilineTextAlignment(.center)
                             .frame(width: 200).minimumScaleFactor(0.5).lineLimit(1)
+                            .padding(.top, 10)
                         
                         // Level & Gold
                         HStack {
@@ -145,6 +158,16 @@ struct ProfileView: View {
                 }
             }
         }
+        .sheet(isPresented: $avatarEditModal) {
+            
+            @State var avatars: [String] = setArray(myData: myData, type: "person.circle")
+            @State var accessories: [String] = setArray(myData: myData, type: "hat.widebrim")
+            @State var pets: [String] = setArray(myData: myData, type: "pawprint")
+            
+            AvatarSelectionView(avatars: avatars, accessories: accessories, pets: pets, selectedAvatar: $selectedAvatar, selectedAccessory: $selectedAccessory, selectedPet: $selectedPet)
+            
+            
+        }
     }
     
     // Stats Row Component
@@ -191,6 +214,48 @@ struct ProfileView: View {
         }
    
     
+    
+}
+
+func setArray(myData: SharedData, type: String) -> [String] {
+    
+    var array: [String] = []
+
+    for index in 0..<myData.items.count {
+        if myData.items[index].iconImage == type && myData.items[index].sold {
+            array.append(myData.items[index].accessoryName)
+        }
+    }
+    
+    return array
+}
+
+func sortByLayer(myData: SharedData, selectedAvatar: String, selctedAccessory: String, selectedPet: String) -> [String] {
+    
+    let itemArray: [Item] = [getItemByName(myData: myData, name: selectedAvatar), getItemByName(myData: myData, name: selectedAvatar), getItemByName(myData: myData, name: selectedPet)
+    ]
+    
+    var layerArray: [String] = ["", "", "", ""]
+    
+    for index in 0..<itemArray.count {
+        for index2 in 0..<itemArray[index].itemLayers.count {
+            switch(itemArray[index].itemLayers[index2])
+            {
+            case 1:
+                layerArray[3] = itemArray[index].itemImage[index2]
+            case 0:
+                layerArray[2] = itemArray[index].itemImage[index2]
+            case -1:
+                layerArray[1] = itemArray[index].itemImage[index2]
+            case -2:
+                layerArray[0] = itemArray[index].itemImage[index2]
+            default:
+                print("")
+            }
+        }
+    }
+    
+    return layerArray
     
 }
 

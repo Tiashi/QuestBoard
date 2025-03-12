@@ -31,8 +31,7 @@ struct QuestDetailView: View {
                 
                 Image(quest.isUrgent ? "bloodyPaper" : "paper")
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 500)
+                    .frame(width: 400, height: 570)
                     .shadow(radius: 10)
                 
                 
@@ -94,6 +93,8 @@ struct QuestDetailView: View {
                     .foregroundColor(.black)
                     .padding(.top, 10)
                     
+                    Text(quest.completionThreshold?.formatted() ?? "No threshold set").myFont(size: 32).padding(.top, 10)
+                    
                 }//QuestParer text
                 .frame(width: 280, height: 420)
             }//QuestPaper
@@ -108,6 +109,15 @@ struct QuestDetailView: View {
                     myData.questsCompletedToday += 1
                     quest.timeOfCompletion = .now
                     quest.completed = true
+                    
+                    myData.activeQuests.sort { (quest1: Quest, quest2: Quest) -> Bool in
+                        if quest1.isUrgent != quest2.isUrgent {
+                            return quest1.isUrgent // Among incomplete, urgent tasks come first
+                        }
+                        return false
+                    
+                    }
+                    
                     dismiss()
                 }, label: {
                     Image(systemName: "flag.pattern.checkered").resizable().frame(width: 25, height: 25)
@@ -116,7 +126,9 @@ struct QuestDetailView: View {
                 Spacer()
                 
                 Button(action: {
-                    editModal.toggle()
+                    if !quest.completed {
+                        editModal.toggle()
+                    }
                 }, label: {
                     Image(systemName: "pencil").resizable().frame(width: 25, height: 25)
                 })
@@ -124,9 +136,9 @@ struct QuestDetailView: View {
                 Spacer()
                 
                 Button(action: {
-                    print("Oho 3")
+                    myData.activeQuests.removeAll { $0.id == quest.id }
                 }, label: {
-                    Image(systemName: "circle.fill")
+                    Image(systemName: "trash")
                 })
                 
             }
@@ -155,7 +167,10 @@ struct QuestDetailView: View {
         // ^ Back ground and Tool Bar ^
         .fullScreenCover(isPresented: $editModal) {
                 NavigationView {
-                    QuestEditView(quest: $quest)
+                    
+                    let copyOfQuest = quest.clone()
+                    
+                    QuestEditView(quest: $quest, questCopy: copyOfQuest)
                 }
             }
     }
