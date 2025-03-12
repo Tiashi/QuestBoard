@@ -168,7 +168,7 @@ struct QuestDetailView: View {
         .fullScreenCover(isPresented: $editModal) {
                 NavigationView {
                     
-                    let copyOfQuest = quest.clone()
+                    let copyOfQuest = clone(quest: quest)
                     
                     QuestEditView(quest: $quest, questCopy: copyOfQuest)
                 }
@@ -176,6 +176,9 @@ struct QuestDetailView: View {
     }
 }
 
+func clone(quest: Quest) -> Quest {
+    return Quest(name: quest.name, description: quest.description, icon: quest.icon, difficulty: quest.difficulty, isUrgent: quest.isUrgent, completed: quest.completed, exp: quest.exp, gold: quest.gold)
+    }
 
 
 #Preview {
