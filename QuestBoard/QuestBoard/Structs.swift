@@ -21,10 +21,6 @@ struct Quest: Identifiable {
     var exp: Int
     var gold: Int
     
-    func clone() -> Quest {
-        return Quest(name: self.name, description: self.description, icon: self.icon, difficulty: self.difficulty, isUrgent: self.isUrgent, completed: self.completed, exp: self.exp, gold: self.gold)
-        }
-    
 }
 
 struct Item: Identifiable {

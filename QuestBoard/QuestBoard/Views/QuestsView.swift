@@ -69,14 +69,14 @@ struct QuestsView: View {
                         
                         
                         
-                    }.frame(width: 200, height: 200).rotationEffect(.degrees(30)).padding(.top, 600).padding(.leading, 250).ignoresSafeArea()
+                    }.frame(width: 200, height: 200).rotationEffect(.degrees(30)).padding(.top, 580).padding(.leading, 250).ignoresSafeArea()
                     
                     
                     HStack {
                         Text("Fill for extra ").myFont(size: 30).foregroundColor(.customBrown).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).padding(.trailing, -8)
                         Text("gold").myFont(size: 30).foregroundColor(.yellow).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1) .padding(.trailing, -6)
                         Text("!").myFont(size: 30).foregroundColor(.customBrown).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1)
-                    }.padding(.top, 685).padding(.trailing, 100)
+                    }.padding(.top, 665).padding(.trailing, 100)
                     
                 }.ignoresSafeArea(edges: .top)
                     .fullScreenCover(isPresented: $addModal) {

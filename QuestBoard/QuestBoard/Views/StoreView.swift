@@ -15,7 +15,7 @@ struct StoreView: View {
             ZStack() {
                 Image("background").resizable().frame(width: 460, height: 793)
                 
-                Text(" Store").font(.title).padding(.bottom, 630)
+                Text(" Store").padding(.bottom, 620).myFont(size: 30).foregroundStyle(Color.customBrown).myShadow(weight: 10, color: .black, radius: 2)
                 
                 ScrollView() {
                     ForEach(myData.items.indices, id: \.self) { index in
@@ -168,11 +168,16 @@ struct StoreView: View {
             .frame(height: 540).padding(.top, 35)
                 
             ZStack() {
-                RoundedRectangle(cornerRadius: 5).frame(width: 65, height: 35).foregroundStyle(.green)
+                RoundedRectangle(cornerRadius: 5).frame(width: 95, height: 35).foregroundStyle(.green)
                 
-                Text("10000")
+                HStack {
+                    Text("\(myData.gold)").myFont(size: 20)
+                    Image(systemName: "dollarsign.circle.fill")
+                        .foregroundColor(.yellow)
+                        .myShadow(weight: 10, color: .black, radius: 1)
+                }
             }   //end ZStack of the owned coin
-            .padding(.top, 690)
+            .padding(.top, 680)
             }   //end ZStack
             .ignoresSafeArea(edges: .top)
         }

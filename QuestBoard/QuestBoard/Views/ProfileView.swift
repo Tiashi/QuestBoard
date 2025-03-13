@@ -35,11 +35,12 @@ struct ProfileView: View {
                             let fullAvatar = sortByLayer(myData: myData, selectedAvatar: selectedAvatar, selctedAccessory: selectedAccessory, selectedPet: selectedPet)
                             ForEach(fullAvatar, id: \.self) { img in
                                 
-                                Image(img)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .clipShape(Circle())
-                                
+                                if(img != "") {
+                                    Image(img)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(Circle())
+                                }
                                 
                             }
                         }
@@ -70,6 +71,7 @@ struct ProfileView: View {
                                     .foregroundColor(.black)
                                 Image(systemName: "dollarsign.circle.fill")
                                     .foregroundColor(.yellow)
+                                    .myShadow(weight: 10, color: .black, radius: 1)
                             }
                         }
                         .frame(width: 250).padding(.vertical, 7)
