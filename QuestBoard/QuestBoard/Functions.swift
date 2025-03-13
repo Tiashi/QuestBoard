@@ -93,3 +93,17 @@ func scheduleTaskReminder(taskName: String, thresholdDate: Date) {
         }
     }
 }
+
+func returnCategory(icon: String) -> String {
+    
+    switch(icon) {
+    case "text.page": return "Default"
+    case "shippingbox": return "Delivery"
+    case "shield.lefthalf.filled": return "Escort"
+    case "archivebox": return "Fetch"
+    case "dumbbell": return "Training"
+    case "hammer": return "Crafting"
+    case "puzzlepiece.extension": return "Puzzle"
+    default: return "Unknown"
+    }
+}

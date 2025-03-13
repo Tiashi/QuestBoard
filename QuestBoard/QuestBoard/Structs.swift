@@ -7,22 +7,6 @@
 
 import SwiftUI
 
-struct Quest: Identifiable {
-    var id: UUID = UUID()
-    var name: String
-    var description: String
-    var icon: String
-    var difficulty: Int
-    var isUrgent: Bool
-    var completed: Bool
-    var completionThreshold: Date?
-    var timeOfCompletion: Date?
-    
-    var exp: Int
-    var gold: Int
-    
-}
-
 struct Item: Identifiable {
     var id: UUID = UUID()
     var accessoryName: String

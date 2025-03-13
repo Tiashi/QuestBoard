@@ -5,9 +5,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct QuestBoardApp: App {
+    
     
     @StateObject private var audioManager = AudioManager()
 
@@ -15,6 +17,6 @@ struct QuestBoardApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }
+        }.modelContainer(for:Quest.self)
     }
 }

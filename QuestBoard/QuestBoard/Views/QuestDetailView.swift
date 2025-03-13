@@ -1,13 +1,15 @@
 import SwiftUI
 
 struct QuestDetailView: View {
-    @Environment(\.dismiss) var dismiss
-
-    @State private var editModal: Bool = false
     
-    @Binding var quest: Quest
+    @Environment(\.modelContext) var context
+    @Environment(\.dismiss) var dismiss
+    
+    @State var index: Int
+    @State var quest: Quest
     
     var myData = sharedData
+    @State private var editModal: Bool = false
     
     var body: some View {
         
@@ -20,7 +22,9 @@ struct QuestDetailView: View {
                 .resizable()
                 .frame(width: 60, height: 60)
                 .foregroundColor(.brown)
-                .shadow(color: .black, radius: 2).shadow(color: .black, radius: 2).shadow(color: .black, radius: 2)
+                .shadow(color: .black, radius: 2)
+                .shadow(color: .black, radius: 2)
+                .shadow(color: .black, radius: 2)
                 .offset(x: -150, y: -330)
                 .padding(.top, 15).onTapGesture {
                     dismiss()
@@ -36,18 +40,18 @@ struct QuestDetailView: View {
                 
                 
                 VStack {
-            
+                    
                     Text(quest.name)
                         .myFont(size: 50)
                         .padding(.vertical, 10)
                     
                     
                     let _description =
-                    Text(quest.description)
+                    Text(quest.descript)
                         .myFont(size: 20)
                         .frame(width: 280, height: 100)
                     
-                       
+                    
                     Rectangle()
                         .fill(Color.clear)
                         .frame(width: 290, height: 110)
@@ -63,7 +67,7 @@ struct QuestDetailView: View {
                         
                         HStack {
                             
-                            Text(ReturnCategory(quest: quest) + " Quest")
+                            Text(returnCategory(icon: quest.icon) + " Quest")
                                 .myFont(size: 24)
                             
                             Image(systemName: quest.icon)
@@ -93,38 +97,36 @@ struct QuestDetailView: View {
                     .foregroundColor(.black)
                     .padding(.top, 10)
                     
-                    Text(quest.completionThreshold?.formatted() ?? "No threshold set").myFont(size: 32).padding(.top, 10)
+                    Text("\(Date(timeIntervalSince1970: quest.completionThreshold).formatted())")
+                    .myFont(size: 32)
+                    .padding(.top, 10)
                     
                 }//QuestParer text
                 .frame(width: 280, height: 420)
             }//QuestPaper
             
-        }
-        .ignoresSafeArea()
-        .toolbar {
+        }.ignoresSafeArea().toolbar {
+            
             ToolbarItemGroup(placement: .topBarTrailing) {
                 
+                //QUEST COMPLETED
                 Button(action: {
+                    print("gg")
                     addExpAndGold(exp: quest.exp, gold: quest.gold)
+                     
                     myData.questsCompletedToday += 1
-                    quest.timeOfCompletion = .now
+                    quest.timeOfCompletion = Date.now.timeIntervalSince1970
                     quest.completed = true
                     
-                    myData.activeQuests.sort { (quest1: Quest, quest2: Quest) -> Bool in
-                        if quest1.isUrgent != quest2.isUrgent {
-                            return quest1.isUrgent // Among incomplete, urgent tasks come first
-                        }
-                        return false
-                    
-                    }
-                    
                     dismiss()
+                    
                 }, label: {
                     Image(systemName: "flag.pattern.checkered").resizable().frame(width: 25, height: 25)
                 })
                 
                 Spacer()
                 
+                //EDIT QUEST
                 Button(action: {
                     if !quest.completed {
                         editModal.toggle()
@@ -132,56 +134,40 @@ struct QuestDetailView: View {
                 }, label: {
                     Image(systemName: "pencil").resizable().frame(width: 25, height: 25)
                 })
-                
+                /*
                 Spacer()
                 
+                //REMOVE QUEST
                 Button(action: {
-                    myData.activeQuests.removeAll { $0.id == quest.id }
-                    dismiss()
+                    print("delete")
                 }, label: {
                     Image(systemName: "trash")
                 })
-                
+                */
             }
-        }
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-            
-            
-            let barAppearance = UIToolbar.appearance()
-            
-            //let itemAppearance = UITabBarItem.appearance()
-            
-            
-            //let myFont = UIFont( name: "Mirage Gothic", size: 14 )!
-            
-            barAppearance.barTintColor = UIColor(Color.customDarkBrown)
-            /*itemAppearance.setTitleTextAttributes([
-                .font: myFont
-            ],for: .normal )
-            itemAppearance.setTitleTextAttributes([
-                .foregroundColor: UIColor.white,
-                .font: myFont
-            ],for: .selected )*/
-            
-        }//toolbarBackground(Color.blue, for: .bottomBar)
-        // ^ Back ground and Tool Bar ^
-        .fullScreenCover(isPresented: $editModal) {
-                NavigationView {
-                    
-                    let copyOfQuest = clone(quest: quest)
-                    
-                    QuestEditView(quest: $quest, questCopy: copyOfQuest)
+        }.navigationBarBackButtonHidden(true).onAppear {
+            UIToolbar.appearance().barTintColor = UIColor(Color.customDarkBrown)
+        }.fullScreenCover(isPresented: $editModal) {
+            NavigationView {
+                
+                //Edit the quest based on id
+                QuestAddEditView(
+                    name: quest.name,
+                    descript: quest.descript,
+                    icon: quest.icon,
+                    difficulty: quest.difficulty,
+                    isUrgent: quest.isUrgent,
+                    exp: quest.exp,
+                    gold: quest.gold,
+                    completionThreshold: quest.completionThreshold,
+                    completed: quest.completed,
+                    timeOfCompletion: quest.timeOfCompletion,
+                    index: index
+                ).onDisappear {
+                    //when edit is finished close the detail modal
+                    dismiss()
                 }
             }
+        }
     }
-}
-
-func clone(quest: Quest) -> Quest {
-    return Quest(name: quest.name, description: quest.description, icon: quest.icon, difficulty: quest.difficulty, isUrgent: quest.isUrgent, completed: quest.completed, exp: quest.exp, gold: quest.gold)
-    }
-
-
-#Preview {
-    ContentView()
 }

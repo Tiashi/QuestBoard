@@ -1,11 +1,10 @@
-
 import SwiftUI
 
 struct CategoryChooseView: View {
     
     @Environment(\.dismiss) var dismiss
     
-    @Binding var quest: Quest
+    @Binding var icon: String
     @Binding var hasSelected: Bool
     
     let categoryNames: [String] = [
@@ -42,7 +41,6 @@ struct CategoryChooseView: View {
                 .padding(.top, 15)
                 .onTapGesture { dismiss() }
             
-            
             ScrollView {
                 
                 ForEach(0..<7) { index in
@@ -51,17 +49,13 @@ struct CategoryChooseView: View {
                         categoryName: categoryNames[index],
                         categoryIcon: categoryIcons[index]
                     ).onTapGesture {
-                        quest.icon = categoryIcons[index]
+                        icon = categoryIcons[index]
                         hasSelected = true
                         dismiss()
                     }
                     
                 }
-            }
-            .frame(width: 380, height: 600)
-            .padding(.top, 30)
-            
-
+            }.frame(width: 380, height: 600).padding(.top, 30)
         }.ignoresSafeArea(.all)
     }
 }
@@ -98,21 +92,4 @@ func displayCategory (
             }
         }
     }
-}
-
-
-
-#Preview {
-    QuestAddView(quest:
-        Quest(
-            name: "Quest Name",
-            description: "Quest description",
-            icon: "text.page",
-            difficulty: 0,
-            isUrgent: false,
-            completed: false,
-            exp: 100,
-            gold: 100
-        )
-    )
 }

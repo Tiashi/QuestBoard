@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-
+/*
 struct QuestAddView: View {
     @Environment(\.dismiss) var dismiss
     
@@ -201,7 +201,4 @@ struct QuestAddView: View {
 
     }
 }
-
-#Preview {
-    QuestAddView(quest: Quest(name: "Quest Name", description: "Quest description", icon: "text.page", difficulty: 1, isUrgent: false, completed: false, exp: 100, gold: 100))
-}
+*/
