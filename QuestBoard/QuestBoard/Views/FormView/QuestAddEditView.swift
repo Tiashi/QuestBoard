@@ -1,10 +1,3 @@
-//
-//  QuestAddEditView.swift
-//  QuestBoard
-//
-//  Created by Rosario d'Antonio on 13/03/25.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -169,15 +162,16 @@ struct QuestAddEditView: View {
                         
                     }.padding(.vertical, 15)
                     //----------------------
-                    //TO IMPLEMENT
+                    
+                    
                     //DATE PICKER
                     Text("Select a date and time")
-                     .myFont(size: 22)
+                        .myFont(size: 22)
                      
-                     DatePicker("", selection: $selectedDate, displayedComponents: [.date, .hourAndMinute])
-                     .datePickerStyle(.automatic)
-                     .padding(.trailing, 40)
-                     .myFont(size: 20)
+                    DatePicker("", selection: $selectedDate, displayedComponents: [.date, .hourAndMinute])
+                        .datePickerStyle(.automatic)
+                        .padding(.trailing, 40)
+                        .myFont(size: 20)
                     //----------------------
                     
                     
@@ -216,7 +210,6 @@ struct QuestAddEditView: View {
                     print(index)
                     
                     if (index > -1) { //EDIT
-                        print("edit")
                         quest[index].name = name
                         quest[index].descript = descript
                         quest[index].icon = icon
@@ -228,7 +221,6 @@ struct QuestAddEditView: View {
                         quest[index].completed = completed
                         quest[index].timeOfCompletion = timeOfCompletion
                     } else { //SAVE
-                        print("save")
                         context.insert(
                             Quest (
                                 name: name,

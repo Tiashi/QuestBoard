@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AvatarSelectionView: View {
+    
     @Environment(\.dismiss) var dismiss
     
     var myData = sharedData
