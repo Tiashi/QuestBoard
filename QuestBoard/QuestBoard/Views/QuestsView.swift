@@ -11,95 +11,96 @@ struct QuestsView: View {
     
     var body: some View {
         
-        ZStack {
-            
-            NavigationStack {
+        ZStack { NavigationStack { ZStack() {
                 
-                ZStack() {
+            Image("background")
+                .resizable()
+                .frame(width: 460, height: 793)
+                .padding(.bottom, 10).ignoresSafeArea(edges: .top)
+            
+            Text(" Quest Board")
+                .myFont(size: 30)
+                .padding(.bottom, 630)
+                .foregroundStyle(Color.customBrown)
+                .myShadow(weight: 8, color: .black, radius: 2)
+                
+            if (quest.count == 0) {
                     
-                    Image("background")
-                        .resizable()
-                        .frame(width: 460, height: 793)
-                        .padding(.bottom, 10).ignoresSafeArea(edges: .top)
+                VStack {
                     
-                    Text(" Quest Board")
+                    Text("Your Quest Board is looking pretty empty...\n Add a new Quest!")
                         .myFont(size: 30)
-                        .padding(.bottom, 630)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(Color.customBrown)
-                        .myShadow(weight: 8, color: .black, radius: 2)
-                    
-                    if (quest.count == 0) {
-                        
-                        VStack {
-                            
-                            Text("Your Quest Board is looking pretty empty...\n Add a new Quest!")
-                                .myFont(size: 30)
-                                .multilineTextAlignment(.center)
-                                .foregroundStyle(Color.customBrown)
-                                .frame(width: 270)
-                                .myShadow(weight: 10, color: .black, radius: 2)
+                        .frame(width: 270)
+                        .myShadow(weight: 10, color: .black, radius: 2)
 
+                    
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 200, height: 200)
+                        .foregroundColor(.customBrown)
+                        .myShadow(weight: 14, color: .black, radius: 2)
+                        .onTapGesture { addModal.toggle() }
+                    
+                }
+                
+            } else {
+                    
+                let columns = [
+                    GridItem(.flexible()),
+                    GridItem(.flexible())
+                ]
+                    
+                HStack {
+                    
+                    Image(systemName: "slider.horizontal.2.square")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(.brown).opacity(0)
+                        .myShadow(weight: 8, color: .black, radius: 2)
+                        .onTapGesture {}
+                    
+                    Spacer().frame(width: 200)
+                    
+                    Image(systemName: "plus.circle")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .foregroundStyle(.brown)
+                        .myShadow(weight: 8, color: .black, radius: 2)
+                        .onTapGesture { addModal.toggle() }
+                    
+                }.padding(.bottom, 500)
+                    
+                //Print all the quest-------------------------------------------------------
+                ScrollView() {
+                        
+                    LazyVGrid(columns: columns) {
                             
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .frame(width: 200, height: 200)
-                                .foregroundColor(.customBrown)
-                                .myShadow(weight: 14, color: .black, radius: 2)
-                                .onTapGesture { addModal.toggle() }
+                        ForEach(quest.indices, id: \.self) { index in
+                            
+                            QuestElement(index: index, quest: quest[index])
                             
                         }
-                        
-                    } else {
-                        
-                        let columns = [
-                            GridItem(.flexible()),
-                            GridItem(.flexible())
-                        ]
-                        
-                        HStack {
-                            
-                            Image(systemName: "slider.horizontal.2.square")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundStyle(.brown).opacity(0)
-                                .myShadow(weight: 8, color: .black, radius: 2)
-                                .onTapGesture {}
-                            
-                            Spacer().frame(width: 200)
-                            
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundStyle(.brown)
-                                .myShadow(weight: 8, color: .black, radius: 2)
-                                .onTapGesture { addModal.toggle() }
-                            
-                        }.padding(.bottom, 500)
-                        
-                        //Print all the quest-------------------------------------------------------
-                        ScrollView() {
-                                
-                            LazyVGrid(columns: columns) {
-                                    
-                                ForEach(quest.indices, id: \.self) { index in
-                                    
-                                    QuestElement(index: index, quest: quest[index])
-                                    
-                                }
-                            }
-                            
-                        }.frame(width: 320, height: 485).padding(.top, 60)
-                        //END Print all the quest-------------------------------------------------------
                     }
                     
-                    //Potion TO IMPLEMENT
-                    VStack {let temp = (myData.questsCompletedToday > 5 ?
-                     "5" : "\(myData.questsCompletedToday)")
+                }.frame(width: 320, height: 485).padding(.top, 60)
+                //END Print all the quest-------------------------------------------------------
+            }
                 
-                Image("potion" + temp)
-                    .resizable()
-                    .rotationEffect(.degrees(potionRotation))
-                    .onAppear { shake() }
+            //Potion
+            VStack {
+                let temp = (
+                    myData.questsCompletedToday > 5 ?
+                    "5"
+                    :
+                    "\(myData.questsCompletedToday)"
+                )
+            
+            Image("potion" + temp)
+                .resizable()
+                .rotationEffect(.degrees(potionRotation))
+                .onAppear { shake() }
                 
             }
             .frame(width: 200, height: 200)
@@ -133,38 +134,36 @@ struct QuestsView: View {
             NavigationView {
                 QuestAddEditView() //ADDING NEW QUEST
             }
-        }
-        
-    }
-}
-}//End Body
+        }}}
+    }//End Body
 
-//TO IMPLEMENT
-func shake() {
-Task {
     
-    let clampedQuestCompleted = max(0, min(myData.questsCompletedToday, 5))
-    
-    if myData.questsCompletedToday != 0 {
-        while true {
-            withAnimation(.easeInOut(duration: 0.1)) {
-                potionRotation = -5 * Double(clampedQuestCompleted)
-            }
-            try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
-            withAnimation(.easeInOut(duration: 0.1)) {
-                potionRotation = 5 * Double(clampedQuestCompleted)
-            }
-            withAnimation(.easeInOut(duration: 0.1)) {
-                potionRotation = 0 // Reset after shaking
-            }
+    func shake() {
+        
+        Task {
+        
+            let clampedQuestCompleted = max(0, min(myData.questsCompletedToday, 5))
             
-            let sleepTime: UInt64 = 2_000_000_000 / UInt64(clampedQuestCompleted)
-            
-            try? await Task.sleep(nanoseconds: sleepTime)
+            if myData.questsCompletedToday != 0 {
+                while true {
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        potionRotation = -5 * Double(clampedQuestCompleted)
+                    }
+                    try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        potionRotation = 5 * Double(clampedQuestCompleted)
+                    }
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        potionRotation = 0 // Reset after shaking
+                    }
+                    
+                    let sleepTime: UInt64 = 2_000_000_000 / UInt64(clampedQuestCompleted)
+                    
+                    try? await Task.sleep(nanoseconds: sleepTime)
+                }
+            }
         }
     }
-}
-}//End func shake()
 }
 struct QuestElement: View {
     
