@@ -111,17 +111,21 @@ struct QuestDetailView: View {
                 
                 //QUEST COMPLETED
                 Button(action: {
-                    print("gg")
+                    
                     addExpAndGold(exp: quest.exp, gold: quest.gold)
-                     
+                    
                     myData.questsCompletedToday += 1
+                    
                     quest.timeOfCompletion = Date.now.timeIntervalSince1970
+                    
                     quest.completed = true
                     
                     dismiss()
                     
                 }, label: {
-                    Image(systemName: "flag.pattern.checkered").resizable().frame(width: 25, height: 25)
+                    Image(systemName: "flag.pattern.checkered")
+                        .resizable()
+                        .frame(width: 25, height: 25)
                 })
                 
                 Spacer()
