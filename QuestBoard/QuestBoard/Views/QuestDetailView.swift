@@ -1,15 +1,19 @@
 import SwiftUI
+import SwiftData
 
 struct QuestDetailView: View {
     
     @Environment(\.modelContext) var context
     @Environment(\.dismiss) var dismiss
     
+    //@Query var allQuests: [Quest]
+    
     @State var index: Int
     @State var quest: Quest
     
-    var myData = sharedData
     @State private var editModal: Bool = false
+    
+    var myData = sharedData
     
     var body: some View {
         
@@ -51,7 +55,6 @@ struct QuestDetailView: View {
                         .myFont(size: 20)
                         .frame(width: 280, height: 100)
                     
-                    
                     Rectangle()
                         .fill(Color.clear)
                         .frame(width: 290, height: 110)
@@ -82,7 +85,10 @@ struct QuestDetailView: View {
                     HStack {
                         ForEach(0..<quest.difficulty, id: \.self) { _ in
                             Image(systemName: "star.fill")
-                                .foregroundColor(.yellow).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1).shadow(color: .black, radius: 1)
+                                .foregroundColor(.yellow)
+                                .shadow(color: .black, radius: 1)
+                                .shadow(color: .black, radius: 1)
+                                .shadow(color: .black, radius: 1)
                         }
                     }
                     
@@ -144,6 +150,7 @@ struct QuestDetailView: View {
                 //REMOVE QUEST
                 Button(action: {
                     print("delete")
+                    context.delete(allQuests[index])
                 }, label: {
                     Image(systemName: "trash")
                 })

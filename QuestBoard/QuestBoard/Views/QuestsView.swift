@@ -262,7 +262,8 @@ struct CompletedView: View {
                     .frame(width: 100)
                 
                 if quest.completed == true {
-                    CountdownTimerView().frame(width: 200)
+                    CountdownTimerView(completionTime: quest.timeOfCompletion)
+                        .frame(width: 200)
                 }
             }
         }
@@ -271,11 +272,14 @@ struct CompletedView: View {
 
 struct CountdownTimerView: View {
     
-    @State private var timeRemaining: Int = 86400 // 24 hours in seconds
+    @State var completionTime: TimeInterval = 0
+    @State private var timeRemaining: Int = 10800// 3 hours in seconds
     @State private var timerActive = true
     
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     var body: some View {
+        
         VStack {
             Text("\(formattedTime())")
                 .myFont(size: 25)
@@ -291,9 +295,13 @@ struct CountdownTimerView: View {
     }
     
     func formattedTime() -> String {
-        let hours = timeRemaining / 3600
-        let minutes = (timeRemaining % 3600) / 60
-        let seconds = timeRemaining % 60
+        
+        let timeElapsed = Int(Date.now.timeIntervalSince1970 - completionTime)
+        let realTimeRemaining = timeRemaining - timeElapsed
+        
+        let hours = realTimeRemaining / 3600
+        let minutes = (realTimeRemaining % 3600) / 60
+        let seconds = realTimeRemaining % 60
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
