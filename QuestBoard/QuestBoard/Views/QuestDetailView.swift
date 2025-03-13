@@ -137,6 +137,7 @@ struct QuestDetailView: View {
                 
                 Button(action: {
                     myData.activeQuests.removeAll { $0.id == quest.id }
+                    dismiss()
                 }, label: {
                     Image(systemName: "trash")
                 })

@@ -10,6 +10,7 @@ import SwiftUI
 struct QuestBoardApp: App {
     
     @StateObject private var audioManager = AudioManager()
+
     
     var body: some Scene {
         WindowGroup {

@@ -15,7 +15,7 @@ struct StoreView: View {
             ZStack() {
                 Image("background").resizable().frame(width: 460, height: 793)
                 
-                Text(" Store").padding(.bottom, 620).myFont(size: 30).foregroundStyle(Color.customBrown).myShadow(weight: 10, color: .black, radius: 2)
+                Text(" Store").padding(.bottom, 620).myFont(size: 30).foregroundColor(Color.customBrown).myShadow(weight: 10, color: .black, radius: 2)
                 
                 ScrollView() {
                     ForEach(myData.items.indices, id: \.self) { index in

@@ -166,6 +166,7 @@ struct QuestAddView: View {
                     quest.gold = 50 * quest.difficulty
                     quest.completionThreshold = selectedDate
                     myData.activeQuests.append(quest)
+                    scheduleTaskReminder(taskName: quest.name, thresholdDate: selectedDate)
                     
                     
                     myData.activeQuests.sort { (quest1: Quest, quest2: Quest) -> Bool in

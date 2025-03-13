@@ -48,6 +48,8 @@ struct ContentView: View {
             
             barAppearance.standardAppearance = UIbarAppearance
             barAppearance.scrollEdgeAppearance = UIbarAppearance
+            
+            requestNotificationPermission()
         }
         
     }
