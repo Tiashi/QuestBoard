@@ -105,7 +105,7 @@ struct QuestsView: View {
             }
             .frame(width: 200, height: 200)
             .rotationEffect(.degrees(30))
-            .padding(.top, 600)
+            .padding(.top, 590)
             .padding(.leading, 250)
             .ignoresSafeArea()
             
@@ -126,7 +126,7 @@ struct QuestsView: View {
             }
             .myShadow(weight: 8, color: .black, radius: 2)
             .myFont(size: 30)
-            .padding(.top, 685)
+            .padding(.top, 675)
             .padding(.trailing, 100)
             
             
